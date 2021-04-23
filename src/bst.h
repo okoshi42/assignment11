@@ -72,12 +72,48 @@ namespace csi281 {
         // need to initialize root
         void insert(T key) {
             // YOUR CODE HERE
+            Node *newNode = new Node(key,nullptr,nullptr);
+            if (root == nullptr) {
+                root = newNode;    
+                count++;
+            }
+            //TO BE FIXED L8TR
+            else {
+                Node* tempNode = root;
+                bool exitCondition = false;
+                while (!exitCondition) {
+                    if (key <= tempNode->key) {
+                        if (tempNode->left == nullptr) {
+                            tempNode->left = newNode;
+                            count++;
+                            exitCondition = true;
+                        }
+                        else tempNode = tempNode->left;
+                    }
+                    else {
+                        if (tempNode->right == nullptr) {
+                            tempNode->right = newNode;
+                            count++;
+                            exitCondition = true;
+                        }
+                        else tempNode = tempNode->right;
+                    }
+                }
+            }
+            //add where it go left right
         }
         
         // Do a search through the tree and return
         // whether or not it contains *key*
         bool contains(const T &key) {
             // YOUR CODE HERE
+            Node* tempNode = root;
+            while (tempNode != nullptr) {
+                if (key == tempNode->key) return true;
+                else if (key < tempNode->key) tempNode = tempNode->left;
+                else tempNode = tempNode->right;
+            }
+            return false;
         }
         
         // Helper for inOrderWalk() to call for entire bst
@@ -91,18 +127,45 @@ namespace csi281 {
         // TIP: See page 288 of Chapter 12 of Introduction to Algorithms
         void inOrderWalk(list<T> &accumulated, Node *current) {
             // YOUR CODE HERE
+            if (current->left != nullptr)inOrderWalk(accumulated, current->left);
+            accumulated.push_back(current->key);
+            if (current->right != nullptr)inOrderWalk(accumulated, current->right); 
+            return;
+            
         }
         
         // Find the minimum key in the tree
         // If the tree is empty, return nullopt
         optional<T> minimum() {
             // YOUR CODE HERE
+            if (root == nullptr)return nullopt;
+            else {
+                Node* tempNode = root;
+                while (tempNode != nullptr) {
+                    cout << tempNode->key << endl;
+                    if (tempNode->left == nullptr)return tempNode->key; 
+                    else tempNode = tempNode->left; 
+                }
+            }
+            return nullopt;
         }
         
         // Find the maximum key in the tree
         // If the tree is empty, return nullopt
         optional<T> maximum() {
             // YOUR CODE HERE
+            if (root == nullptr)return nullopt;
+            else {
+                Node* tempNode = root;
+                T max = tempNode->key;
+                while (tempNode != nullptr) {
+                    cout << tempNode->key << endl;
+                    if (max < tempNode->key) max = tempNode->key;
+                    if (tempNode->right == nullptr)return max;
+                    else tempNode = tempNode->right;
+                }
+                return max;
+            }
         }
         
         // How many nodes are in the tree?
