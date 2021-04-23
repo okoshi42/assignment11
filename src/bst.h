@@ -142,7 +142,6 @@ namespace csi281 {
             else {
                 Node* tempNode = root;
                 while (tempNode != nullptr) {
-                    cout << tempNode->key << endl;
                     if (tempNode->left == nullptr)return tempNode->key; 
                     else tempNode = tempNode->left; 
                 }
@@ -159,7 +158,6 @@ namespace csi281 {
                 Node* tempNode = root;
                 T max = tempNode->key;
                 while (tempNode != nullptr) {
-                    cout << tempNode->key << endl;
                     if (max < tempNode->key) max = tempNode->key;
                     if (tempNode->right == nullptr)return max;
                     else tempNode = tempNode->right;
